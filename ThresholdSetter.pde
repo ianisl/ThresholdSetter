@@ -20,7 +20,6 @@ public class ThresholdSetter extends controlP5.Controller
     {
         super(cp5, name);
         this.parent = parent;
-        parent.registerDispose(this);
         if (getValue() > maxValue) 
         {
             setValue(maxValue);
