@@ -1,0 +1,17 @@
+{
+  "name": "ThresholdSetter",
+  "version": "0.0.0",
+  "authors": [
+    "ianis@ianislallemand.net <ianis@ianislallemand.net>"
+  ],
+  "description": "GUI utility for ControlP5",
+  "main": "ThresholdSetter.pde",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
