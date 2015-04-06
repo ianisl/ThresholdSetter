@@ -118,21 +118,21 @@ public class ThresholdSetter extends controlP5.Controller
         }
     }
 
-    public ThresholdSetter setColorBackground(int color)
+    public ThresholdSetter setColorBackground(int backgroundColor)
     {
-        backgroundColor = color;
+        this.backgroundColor = backgroundColor;
         return this;
     }
 
-    public ThresholdSetter setColorChart(int color)
+    public ThresholdSetter setColorChart(int chartColor)
     {
-        chartColor = color;
+        this.chartColor = chartColor;
         return this;
     }
 
-    public ThresholdSetter setColorThresholdActivationIndicator(int color)
+    public ThresholdSetter setColorThresholdActivationIndicator(int thresholdActivationIndicatorColor)
     {
-        thresholdActivationIndicatorColor = color;
+        this.thresholdActivationIndicatorColor = thresholdActivationIndicatorColor;
         return this;
     }
 
