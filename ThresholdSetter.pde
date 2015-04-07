@@ -166,14 +166,16 @@ public class ThresholdSetter extends controlP5.Controller
         return thresholdLineY;
     }
 
-    public void setThresholdLineY(int thresholdLineY)
+    public ThresholdSetter setThresholdLineY(int thresholdLineY)
     {
         this.thresholdLineY = thresholdLineY;
+        return this;
     }
 
     public ThresholdSetter setDecayTime(int decayTime)
     {
         this.decayTime = decayTime;
+        return this;
     }
 }
 
