@@ -52,7 +52,7 @@ public class ThresholdSetter extends controlP5.Controller
                 Label caption = b.getCaptionLabel();
                 caption.style().marginTop = getHeight() + 5;
                 caption.draw(p);
-                if (lastBufferSampleAboveThreshold) // Threshold activation indicator
+                if (isLastDetectionPositive) // Threshold activation indicator
                 {
                     p.stroke(thresholdActivationIndicatorColor);
                     p.fill(thresholdActivationIndicatorColor);
