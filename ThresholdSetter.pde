@@ -50,9 +50,10 @@ public class ThresholdSetter extends controlP5.Controller
                     p.vertex(p.map(i, bufferSize - 1, 0, getWidth(), 0), p.map(buffer[i], minValue, maxValue, getHeight(), 0));
                 }
                 p.endShape();
-                p.fill(captionLabelColor); // Draw caption label
+                // p.fill(255, 0, 0); // Draw caption label // TODO not working
                 Label caption = b.getCaptionLabel();
                 caption.style().marginTop = getHeight() + 5;
+                // caption.style().color = captionLabelColor; // TODO what is the name of the property?
                 caption.draw(p);
                 if (isLastDetectionPositive) // Threshold activation indicator
                 {
