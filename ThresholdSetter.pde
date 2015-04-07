@@ -195,7 +195,7 @@ public class MinimThresholdSetter extends ThresholdSetter
     protected int minimBufferSize;
     public float lastSampleLevel; // By convention, = to distance above signal level is last detection is a truly position one, equal to -1 otherwise
 
-    public void MinimThresholdSetter(int minimBufferSize, ControlP5 cp5, String name, PApplet applet)
+    public MinimThresholdSetter(int minimBufferSize, ControlP5 cp5, String name, PApplet applet)
     {
         super(cp5, name, applet);
         this.minimBufferSize = minimBufferSize;
