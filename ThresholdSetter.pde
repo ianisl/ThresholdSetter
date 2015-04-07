@@ -1,3 +1,5 @@
+import ddf.minim.*;
+
 public class ThresholdSetter extends controlP5.Controller
 {
     /*
@@ -5,7 +7,6 @@ public class ThresholdSetter extends controlP5.Controller
      * The controller also stores the position (in pixels) of the threshold line, and the signal-level values
      * at bottom and top of controller display.
      */
-    PApplet applet;
     protected int backgroundColor = 0xff02344d;
     protected int chartColor = 0xff016c9e;
     protected int thresholdActivationIndicatorColor = 0xffE30202;
@@ -16,14 +17,17 @@ public class ThresholdSetter extends controlP5.Controller
     protected float minValue = 0; // Signal-level value at bottom of controller display 
     protected float maxValue = 1; // Signal-level value at top of controller display 
     protected float[] buffer = new float[bufferSize]; // Buffer of signal values
+    protected int captionXOffset = 10;
+    protected int captionYOffset = 10;
+    protected int thresholdActivationIndicatorYOffset = 7;
+    protected int thresholdActivationIndicatorSize = 5;
     public boolean isLastDetectionPositive = false;
     protected int previousBufferSampleAboveThresholdDetectionTime = 0;
     protected int decayTime = 500; // Samples detected during a time window equal to decayTime after the last detection will be marked as negative, even if they are above threshold
 
-    public ThresholdSetter(ControlP5 cp5, String name, PApplet applet)
+    public ThresholdSetter(ControlP5 cp5, String name)
     {
         super(cp5, name);
-        this.applet = applet;
         if (getValue() > maxValue) 
         {
             setValue(maxValue);
@@ -32,34 +36,35 @@ public class ThresholdSetter extends controlP5.Controller
         {
             setValue(minValue);
         }
-        setView(new ControllerView<ThresholdSetter>() // replace the default view with a custom view.
+        setView(new ControllerView() // replace the default view with a custom view.
         {
-            public void display(PApplet p, ThresholdSetter b)
+            public void display(PGraphics p, Object b)
             {
                 p.strokeWeight(1);
                 p.fill(backgroundColor); // Draw button background
                 p.stroke(backgroundColor);
                 p.rect(0, 0, getWidth(), getHeight());
                 p.stroke(thresholdLineColor); // Draw threshold line 
-                p.line(0, thresholdLineY, width, thresholdLineY);
+                p.line(0, thresholdLineY, getWidth(), thresholdLineY);
                 p.noFill(); // Draw buffer chart
                 p.stroke(chartColor);
                 p.beginShape();
                 for (int i = bufferSize - 1; i >= 0; i--)
                 {
-                    p.vertex(p.map(i, bufferSize - 1, 0, getWidth(), 0), p.max(p.map(buffer[i], minValue, maxValue, getHeight(), 0), 0));
+                    p.vertex(map(i, bufferSize - 1, 0, getWidth(), 0), max(map(buffer[i], minValue, maxValue, getHeight(), 0), 0));
                 }
                 p.endShape();
-                // p.fill(255, 0, 0); // Draw caption label // TODO not working
-                Label caption = b.getCaptionLabel();
-                caption.style().marginTop = getHeight() + 5;
-                // caption.style().color = captionLabelColor; // TODO what is the name of the property?
-                caption.draw(p);
+                p.fill(captionLabelColor); // Draw caption label
+                p.textFont(new BitFont(CP.decodeBase64(BitFont.standard58base64)));
+                p.pushMatrix();
+                p.translate(captionXOffset, getHeight() + captionYOffset);
+                p.text(getName().toUpperCase(), 0, 0);
+                p.popMatrix();
                 if (isLastDetectionPositive) // Threshold activation indicator
                 {
                     p.stroke(thresholdActivationIndicatorColor);
                     p.fill(thresholdActivationIndicatorColor);
-                    p.rect(caption.getWidth() + 5, getHeight() + 8, 5, 5);
+                    p.rect(0, getHeight() + thresholdActivationIndicatorYOffset, thresholdActivationIndicatorSize, thresholdActivationIndicatorSize);
                 }
             }
         });
@@ -82,7 +87,7 @@ public class ThresholdSetter extends controlP5.Controller
 
     protected void updateControllerValue()
     {
-        setValue(applet.map(thresholdLineY, 0, getHeight(), maxValue, minValue)); // Update the controller value based on the position of the threshold line and the controller's min/max range
+        setValue(map(thresholdLineY, 0, getHeight(), maxValue, minValue)); // Update the controller value based on the position of the threshold line and the controller's min/max range
     }
 
     public float getMinValue()
@@ -103,7 +108,7 @@ public class ThresholdSetter extends controlP5.Controller
         if (distanceToThreshold > 0) 
         { 
             // If we have a detection (a buffer sample above threshold)
-            int bufferSampleAboveThresholdDetectionTime = applet.millis();
+            int bufferSampleAboveThresholdDetectionTime = millis();
             if (bufferSampleAboveThresholdDetectionTime - previousBufferSampleAboveThresholdDetectionTime > decayTime)
             {
                 // If we are outside decay window, this is a true positive detection
@@ -126,7 +131,7 @@ public class ThresholdSetter extends controlP5.Controller
     protected void onDrag()
     {
         Pointer p1 = getPointer();
-        float dif = applet.dist(p1.px(), p1.y(), p1.x(), p1.y());
+        float dif = dist(p1.px(), p1.y(), p1.x(), p1.y());
         if (p1.y() > 0 && p1.y() < getHeight())
         {
             thresholdLineY = p1.y();
@@ -192,6 +197,7 @@ public class ThresholdSetter extends controlP5.Controller
         this.decayTime = decayTime;
         return this;
     }
+
 }
 
 public class MinimThresholdSetter extends ThresholdSetter
@@ -207,11 +213,11 @@ public class MinimThresholdSetter extends ThresholdSetter
     protected int minimBufferSize;
     public float lastSampleLevel; // By convention, = to distance above signal level is last detection is a truly position one, equal to -1 otherwise
 
-    public MinimThresholdSetter(int minimBufferSize, ControlP5 cp5, String name, PApplet applet)
+    public MinimThresholdSetter(ControlP5 cp5, String name, int minimBufferSize, PApplet applet)
     {
-        super(cp5, name, applet);
+        super(cp5, name);
         this.minimBufferSize = minimBufferSize;
-        applet.registerPre(this);
+        registerPre(this);
         minim = new Minim(applet);
         audioInput = minim.getLineIn(Minim.STEREO, minimBufferSize); // add the mean level of the current buffer to ThresholdSetters' internal buffer
     }
