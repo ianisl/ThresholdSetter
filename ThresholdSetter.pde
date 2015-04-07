@@ -198,20 +198,20 @@ public class MinimThresholdSetter extends ThresholdSetter
         this.minimBufferSize = minimBufferSize;
         applet.registerPre(this);
         applet.registerPost(this);
-    }
-
-    public void pre()
-    {
         minim = new Minim(applet);
         audioInput = minim.getLineIn(Minim.STEREO, minimBufferSize); // add the mean level of the current buffer to ThresholdSetters' internal buffer
     }
 
-    public void post()
+    public void pre()
     {
         lastSampleLevel = this.addToBuffer(audioInput.left.level()); // add the mean level of the current buffer to the MinimThresholdSetters' internal buffer
         if (!this.isLastDetectionPositive)
         {
             lastSampleLevel = -1;
         }
+    }
+
+    public void post()
+    {
     }
 }
