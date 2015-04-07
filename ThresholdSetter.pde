@@ -56,7 +56,7 @@ public class ThresholdSetter extends controlP5.Controller
                 {
                     p.stroke(thresholdActivationIndicatorColor);
                     p.fill(thresholdActivationIndicatorColor);
-                    p.rect(caption.getWidth() + 5, getHeight() + 5, 5, 5);
+                    p.rect(caption.getWidth() + 5, getHeight() + 8, 5, 5);
                 }
             }
         });
@@ -197,7 +197,6 @@ public class MinimThresholdSetter extends ThresholdSetter
         super(cp5, name, applet);
         this.minimBufferSize = minimBufferSize;
         applet.registerPre(this);
-        applet.registerPost(this);
         minim = new Minim(applet);
         audioInput = minim.getLineIn(Minim.STEREO, minimBufferSize); // add the mean level of the current buffer to ThresholdSetters' internal buffer
     }
@@ -209,9 +208,5 @@ public class MinimThresholdSetter extends ThresholdSetter
         {
             lastSampleLevel = -1;
         }
-    }
-
-    public void post()
-    {
     }
 }
