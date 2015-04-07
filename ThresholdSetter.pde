@@ -47,7 +47,7 @@ public class ThresholdSetter extends controlP5.Controller
                 p.beginShape();
                 for (int i = bufferSize - 1; i >= 0; i--)
                 {
-                    p.vertex(p.map(i, bufferSize - 1, 0, getWidth(), 0), p.map(buffer[i], minValue, maxValue, getHeight(), 0));
+                    p.vertex(p.map(i, bufferSize - 1, 0, getWidth(), 0), p.max(p.map(buffer[i], minValue, maxValue, getHeight(), 0), 0));
                 }
                 p.endShape();
                 // p.fill(255, 0, 0); // Draw caption label // TODO not working
