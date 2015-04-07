@@ -9,6 +9,8 @@ public class ThresholdSetter extends controlP5.Controller
     protected int backgroundColor = 0xff02344d;
     protected int chartColor = 0xff016c9e;
     protected int thresholdActivationIndicatorColor = 0xffE30202;
+    protected int captionLabelColor = 0xffFFFFFF;
+    protected int thresholdLineColor = 0xffFFFFFF;
     protected int thresholdLineY = 0; // Threshold line position in pixels 
     protected int bufferSize = 512; // Sample size of internal signal buffer
     protected float minValue = 0; // Signal-level value at bottom of controller display 
@@ -35,10 +37,10 @@ public class ThresholdSetter extends controlP5.Controller
             public void display(PApplet p, ThresholdSetter b)
             {
                 p.strokeWeight(1);
-                p.fill(backgroundColor); // draw button background
+                p.fill(backgroundColor); // Draw button background
                 p.stroke(backgroundColor);
                 p.rect(0, 0, getWidth(), getHeight());
-                p.stroke(255); // Threshold line 
+                p.stroke(thresholdLineColor); // Draw threshold line 
                 p.line(0, thresholdLineY, width, thresholdLineY);
                 p.noFill(); // Draw buffer chart
                 p.stroke(chartColor);
@@ -48,7 +50,7 @@ public class ThresholdSetter extends controlP5.Controller
                     p.vertex(p.map(i, bufferSize - 1, 0, getWidth(), 0), p.map(buffer[i], minValue, maxValue, getHeight(), 0));
                 }
                 p.endShape();
-                p.fill(255); // draw the custom label 
+                p.fill(captionLabelColor); // Draw caption label
                 Label caption = b.getCaptionLabel();
                 caption.style().marginTop = getHeight() + 5;
                 caption.draw(p);
@@ -146,6 +148,18 @@ public class ThresholdSetter extends controlP5.Controller
     public ThresholdSetter setColorThresholdActivationIndicator(int thresholdActivationIndicatorColor)
     {
         this.thresholdActivationIndicatorColor = thresholdActivationIndicatorColor;
+        return this;
+    }
+
+    public ThresholdSetter setColorCaptionLabel(int captionLabelColor)
+    {
+        this.captionLabelColor = captionLabelColor;
+        return this;
+    }
+
+    public ThresholdSetter setColorThresholdLine(int thresholdLineColor)
+    {
+        this.thresholdLineColor = thresholdLineColor;
         return this;
     }
 
