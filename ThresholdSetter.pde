@@ -171,11 +171,6 @@ public class ThresholdSetter extends controlP5.Controller
         this.thresholdLineY = thresholdLineY;
     }
 
-    public boolean isLastBufferSampleAboveThreshold()
-    {
-        return lastBufferSampleAboveThreshold;
-    }
-
     public ThresholdSetter setDecayTime(int decayTime)
     {
         this.decayTime = decayTime;
