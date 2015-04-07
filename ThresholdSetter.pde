@@ -19,7 +19,8 @@ public class ThresholdSetter extends controlP5.Controller
     protected float[] buffer = new float[bufferSize]; // Buffer of signal values
     protected int captionXOffset = 10;
     protected int captionYOffset = 10;
-    protected int thresholdActivationIndicatorYOffset = 7;
+    protected int thresholdActivationIndicatorXOffset = 6;
+    protected int thresholdActivationIndicatorYOffset = 2;
     protected int thresholdActivationIndicatorSize = 5;
     public boolean isLastDetectionPositive = false;
     protected int previousBufferSampleAboveThresholdDetectionTime = 0;
@@ -64,7 +65,7 @@ public class ThresholdSetter extends controlP5.Controller
                 {
                     p.stroke(thresholdActivationIndicatorColor);
                     p.fill(thresholdActivationIndicatorColor);
-                    p.rect(0, getHeight() + thresholdActivationIndicatorYOffset, thresholdActivationIndicatorSize, thresholdActivationIndicatorSize);
+                    p.rect(getWidth() - thresholdActivationIndicatorXOffset, thresholdActivationIndicatorYOffset, thresholdActivationIndicatorSize, thresholdActivationIndicatorSize);
                 }
             }
         });
