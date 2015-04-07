@@ -189,6 +189,7 @@ public class ThresholdSetter extends controlP5.Controller
     public ThresholdSetter setThresholdLineY(int thresholdLineY)
     {
         this.thresholdLineY = thresholdLineY;
+        updateControllerValue();
         return this;
     }
 
