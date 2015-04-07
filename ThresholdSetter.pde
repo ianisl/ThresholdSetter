@@ -181,14 +181,15 @@ public class ThresholdSetter extends controlP5.Controller
         return bufferSize;
     }
 
-    public int getThresholdLineY()
+    public float getThresholdPercentage()
     {
-        return thresholdLineY;
+        return 1 - ((float) thresholdLineY) / getHeight();
     }
 
-    public ThresholdSetter setThresholdLineY(int thresholdLineY)
+    public ThresholdSetter setThresholdPercentage(float thresholdPercentage)
     {
-        this.thresholdLineY = thresholdLineY;
+        thresholdPercentage = max(min(thresholdPercentage, 1), 0);
+        thresholdLineY = int((1 - thresholdPercentage) * getHeight());
         updateControllerValue();
         return this;
     }
@@ -198,7 +199,6 @@ public class ThresholdSetter extends controlP5.Controller
         this.decayTime = decayTime;
         return this;
     }
-
 }
 
 public class MinimThresholdSetter extends ThresholdSetter
