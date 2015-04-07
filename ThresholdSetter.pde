@@ -197,7 +197,7 @@ public class MinimThresholdSetter extends ThresholdSetter
 
     public void MinimThresholdSetter(int minimBufferSize, ControlP5 cp5, String name, PApplet applet)
     {
-        super(ControlP5 cp5, String name, PApplet applet);
+        super(cp5, name, applet);
         this.minimBufferSize = minimBufferSize;
         applet.registerPre(this);
         applet.registerPost(this);
