@@ -106,7 +106,7 @@ public class ThresholdSetter extends controlP5.Controller
     {
         if (sample > maxValue)
         {
-            sample = maxValue // Clip
+            sample = maxValue; // Clip
         }
         System.arraycopy(buffer, 1, buffer, 0, bufferSize - 1);
         buffer[bufferSize - 1] = sample;
