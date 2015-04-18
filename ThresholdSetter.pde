@@ -52,7 +52,6 @@ public class ThresholdSetter extends controlP5.Controller
                 p.beginShape();
                 for (int i = bufferSize - 1; i >= 0; i--)
                 {
-                    // p.vertex(map(i, bufferSize - 1, 0, getWidth(), 0), max(map(buffer[i], minValue, maxValue, getHeight(), 0), 0));
                     p.vertex(map(i, bufferSize - 1, 0, getWidth(), 0), map(buffer[i], minValue, maxValue, getHeight(), 0));
                 }
                 p.endShape();
